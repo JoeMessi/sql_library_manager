@@ -1,0 +1,45 @@
+extends layout
+
+block content
+
+  p
+    a.button(href='/books/new') Create New Book
+
+  form#search(action='/books/search' method='get')
+    input(type='text', placeholder='Search...', name='search')
+    input(type='submit', value='Search' )
+
+  if(books.length !== 0)
+    table
+     colgroup
+      col(span='1', style='width: 50%;')
+      col(span='1', style='width: 15%;')
+      col(span='1', style='width: 15%;')
+      col(span='1', style='width: 15%;')
+      thead
+        tr
+          th Title
+          th Author
+          th Genre
+          th Year
+      tbody
+
+        each book in books
+          tr
+            td
+              a(href='/books/#{book.id}') #{book.title}
+            td #{book.author}
+            td #{book.genre}
+            td #{book.year}
+   else
+     h3 Sorry, we couldn't find any books for you!
+
+
+  if(query)
+    p
+      a.button(href='/books/page/1') Come back to the full list
+
+  p
+    -var n = 1;
+      while n <= totalPages
+        a.button(href='/books/page/#{n}')= n++
